@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const API_KEY = process.env.OPENAI_API_KEY;
+const API_KEY = process.env.OPENAI_API_KEY; console.log("API Key Loaded:", API_KEY ? "YES" : "NO");
 
 app.post("/chat", async (req, res) => {
     try {
