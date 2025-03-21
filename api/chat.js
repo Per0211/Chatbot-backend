@@ -8,9 +8,10 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const API_KEY = process.env.OPENAI_API_KEY; console.log("API Key Loaded:", API_KEY ? "YES" : "NO");
+const API_KEY = process.env.OPENAI_API_KEY; 
+console.log("API Key Loaded:", API_KEY ? "YES" : "NO");
 
-app.post("/chat", async (req, res) => {
+app.post("/api/chat", async (req, res) => {  // 💡 Retter endpoint-stien
     try {
         const response = await fetch("https://api.openai.com/v1/chat/completions", {
             method: "POST",
@@ -31,4 +32,5 @@ app.post("/chat", async (req, res) => {
     }
 });
 
-app.listen(3000, () => console.log("Server running on port 3000"));
+// 💡 Eksporter en handler i stedet for at bruge app.listen()
+export default app;
