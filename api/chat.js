@@ -1,17 +1,15 @@
-import express from "express";
-import cors from "cors";
 import fetch from "node-fetch";
 import dotenv from "dotenv";
 
 dotenv.config();
-const app = express();
-app.use(express.json());
-app.use(cors());
 
-const API_KEY = process.env.OPENAI_API_KEY; 
-console.log("API Key Loaded:", API_KEY ? "YES" : "NO");
+export default async function handler(req, res) {
+    if (req.method !== "POST") {
+        return res.status(405).json({ error: "Kun POST-requests er tilladt" });
+    }
 
-app.post("/api/chat", async (req, res) => {  // 💡 Retter endpoint-stien
+    const API_KEY = process.env.OPENAI_API_KEY;
+
     try {
         const response = await fetch("https://api.openai.com/v1/chat/completions", {
             method: "POST",
@@ -30,7 +28,4 @@ app.post("/api/chat", async (req, res) => {  // 💡 Retter endpoint-stien
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-});
-
-// 💡 Eksporter en handler i stedet for at bruge app.listen()
-export default app;
+}
